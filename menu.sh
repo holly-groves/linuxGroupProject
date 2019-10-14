@@ -18,12 +18,13 @@ case $action in
 	"Create/access a repository")
 		echo ""
 		echo "Please enter the name of the repository you would like to access. If it doesn't exist, you will be given the option to create one."
-		echo ""
 		echo "Enter repository name:"
 		read repoName
-	#	path=pwd #doesn't work, assigns pwd instead of the running command
-		if [ !$repoName ] #if the repo doesn't exist
+		if [ -d $repoName ] #if the repo does exist
 		then
+		cd $repoName
+		echo pwd
+		else # if the repo doesn't already exist
 			echo ""
 			echo "Oops! This repository doesn't exist. Select one of the menu options below."
 			select action in "Create the repository ${repoName}" "Go back to main menu"
@@ -46,13 +47,14 @@ case $action in
 					;;
 			esac
 			done
-		else # if the repo does already exist
-			cd $repoName	# move into it
 		fi
 		echo ""
 		echo "Current directory: "
 		pwd
+		break
 		;;
+
+
 	"List the contents of the current directory")
 		echo "Listing the contents for directory: "
 		pwd
@@ -106,6 +108,8 @@ case $action in
 		done
 		pwd
 		;;
+
+
 	"Log a file out of the repository")
 		echo "Log out a file"
 		echo "Enter the file you want to log out"
@@ -114,6 +118,8 @@ case $action in
 		;;	quit)
 		break
 		;;
+
+
 	"Exit menu")
 		exit
 		;;
